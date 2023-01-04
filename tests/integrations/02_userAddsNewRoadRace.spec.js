@@ -1,23 +1,22 @@
 // @ts-check
 import fs from 'fs'
-import { test, expect } from "@playwright/test";
+import { expect, test } from "@playwright/test";
 
 import newRoadRace from "../newRoadRace.js"
 import starterRoadRaces from "../starterRoadRaces.js"
 // ^^ originally had as JSON
 // TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".json"
 
-const roadRacesFilePath = "roadRaces.json"
+const roadRacesTestFilePath = "roadRacesTest.json"
 
 test.describe("Road Races New", () => {
   test.beforeEach(async ({ page }) => {
-    fs.writeFileSync(roadRacesFilePath, JSON.stringify(starterRoadRaces))
     await page.goto("/road-races/new");
   })
 
-  test.afterEach(async ({ page }) => {
-    fs.writeFileSync(roadRacesFilePath, JSON.stringify(starterRoadRaces))
-  })
+  test.use({
+    ignoreHTTPSErrors: true,
+  });
 
   test("adds a road race to the list upon submitting the form", async ({ page }) => {
     // test filling in the form and submitting here
@@ -35,8 +34,14 @@ test.describe("Road Races New", () => {
     await expect(newRace).toHaveText(`${newRoadRace.name} - ${newRoadRace.miles} Miles`)
     
     // option 2
-    await expect(page
-      .getByRole("listitem"))
-      .toHaveText(["Disney Princess Half Marathon - 13.1 Miles", "Moab Trail Marathon - 26.2 Miles", "Pikes Peak Marathon - 26.2 Miles"]);
+    await expect(page.getByRole("listitem")).toHaveText([
+      "Disney Princess Half Marathon - 13.1 Miles", 
+      "Moab Trail Marathon - 26.2 Miles", 
+      "Pikes Peak Marathon - 26.2 Miles"
+    ]);
+  })
+  
+  test.afterEach(() => {
+    fs.writeFileSync(roadRacesTestFilePath, JSON.stringify(starterRoadRaces))
   })
 })
