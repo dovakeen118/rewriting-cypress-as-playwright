@@ -1,0 +1,21 @@
+{
+  "type": "module",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client",
+    "e2e"
+  ],
+  "scripts": {
+    "build:client": "yarn workspace running-in-monolith-apps-client build",
+    "dev": "yarn workspace running-in-monolith-apps-server dev",
+    "dev:debug": "yarn workspace running-in-monolith-apps-server dev:debug",
+    "heroku-postbuild": "yarn workspace running-in-monolith-apps-client build",
+    "start": "yarn workspace running-in-monolith-apps-server start",
+    "dev:e2e": "yarn workspace running-in-monolith-apps-server dev:e2e",
+    "e2e:run": "yarn workspace running-in-monolith-apps-e2e e2e:run"
+  },
+  "engines": {
+    "node": "^16.18"
+  }
+}

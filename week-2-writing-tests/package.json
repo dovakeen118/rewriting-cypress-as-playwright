@@ -1,10 +1,11 @@
 {
-  "name": "acceptance-testing-with-cypress",
+  "name": "writing-tests",
   "version": "0.0.0",
   "private": true,
   "type": "module",
   "scripts": {
     "dev": "./node_modules/.bin/nodemon src/app.js",
+    "dev:test": "NODE_ENV=test ./node_modules/.bin/nodemon src/app.js",
     "dev:debug": "./node_modules/.bin/nodemon --inspect-brk src/app.js",
     "test": "playwright test",
     "lint": "./node_modules/.bin/eslint"

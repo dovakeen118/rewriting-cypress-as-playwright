@@ -100,12 +100,12 @@ const config = {
   // outputDir: "test-results/",
 
   /* Run your local dev server before starting the tests */
-  webServer: {
-    command: "NODE_ENV=test yarn run dev",
-    port: 3000,
-    timeout: 120 * 1000,
-    reuseExistingServer: !process.env.CI,
-  },
+  // webServer: {
+  //   command: "NODE_ENV=test yarn run dev",
+  //   port: 3000,
+  //   timeout: 120 * 1000,
+  //   reuseExistingServer: !process.env.CI,
+  // },
 };
 
 export default config
