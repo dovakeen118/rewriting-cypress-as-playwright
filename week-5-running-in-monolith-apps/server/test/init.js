@@ -1,5 +1,5 @@
-import boot from "../src/boot"
-import "./factories"
+import boot from "../src/boot.js"
+import "./factories.js"
 
 beforeAll(async () => {
   const bootResult = await boot()
