@@ -1,1 +1,2 @@
-import("../src/boot.js");
+import "../src/boot.js"
+import "./factories"
