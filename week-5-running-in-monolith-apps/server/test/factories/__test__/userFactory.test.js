@@ -1,7 +1,11 @@
 // import { User } from "../../../src/models/index"
 // import Factory from "../Factory"
-const Factory = require("../Factory.js")
-const User = require("../../../src/models/index.js")
+const Factory = require("rosie").Factory
+// const User = require("../../../src/models/index.js")
+const userFactory = require("../userFactory.js")
+beforeEach(() => {
+  Factory.resetAll()
+})
 describe("Factory", () => {
   test("dummy test", () => {
     expect(1).toBe(1)
@@ -15,8 +19,11 @@ describe("Factory", () => {
 
   describe("build", () => {
     it("builds a user", async () => {
-      const user = await Factory.build("user")
-      expect(user).toBeInstanceOf(User)
+      const user = userFactory.build("user")
+      expect(user).toHaveProperty("id")
+      expect(user).toHaveProperty("firstName")
+      expect(user).toHaveProperty("lastName")
+      expect(user).toHaveProperty("email")
     })
   })
   // describe("create", () => {
