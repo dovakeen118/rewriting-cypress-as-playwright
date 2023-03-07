@@ -8,7 +8,7 @@ usersRouter.get("/", async (req, res) => {
   try {
     const users = await User.query()
     return res.status(200).json({ users: users })
-  } catch(err) {
+  } catch (err) {
     return res.status(500).json({ errors: err })
   }
 })
