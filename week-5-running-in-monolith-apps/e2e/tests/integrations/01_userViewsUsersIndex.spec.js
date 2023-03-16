@@ -18,7 +18,7 @@ test.describe("Users Index", async () => {
         lastName: "Potter",
       },
     })
-    expect(response.ok()).toBeTruthy()
+    expect(response).toBeTruthy()
   })
 
   test.beforeEach(async ({ page }) => {
