@@ -10,6 +10,16 @@ const ObjectionModel = require("objection").Model;
  * @class Model
  */
 class Model extends ObjectionModel {
+  constructor(attributes = {}) {
+    super()
+    if (attributes !== {}) {
+      this.$set(attributes)
+    }
+  }
+  // https://github.com/rosiejs/rosie#associate-a-factory-with-an-existing-class
+  // when passing a class to a rosie Factory, will pass the output of .build to the constructor of the class
+  // with inheritance from Objection, need to explicitly define a constructor method for rosie
+  
   $beforeInsert() {
     this.createdAt = new Date().toISOString();
     this.updatedAt = new Date().toISOString();
