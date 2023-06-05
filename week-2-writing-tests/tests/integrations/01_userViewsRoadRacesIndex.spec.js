@@ -2,7 +2,7 @@
 import { expect, test } from "@playwright/test"
 
 test.describe("Road Races Index", () => {
-  // ^^ test.describe does not take argument of page
+  // ^^ test.describe does not take argument of `page`
   test.beforeEach(async ({ page }) => {
     await page.goto("/road-races")
   })

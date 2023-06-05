@@ -4,8 +4,6 @@ import { expect, test } from "@playwright/test"
 
 import newRoadRace from "../newRoadRace.js"
 import starterRoadRaces from "../starterRoadRaces.js"
-// ^^ originally had as JSON
-// TypeError [ERR_UNKNOWN_FILE_EXTENSION]: Unknown file extension ".json"
 
 const roadRacesTestFilePath = "roadRacesTest.json"
 
