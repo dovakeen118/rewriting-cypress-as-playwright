@@ -1,7 +1,7 @@
 // @ts-check
 import { expect, test } from "@playwright/test"
 
-import { factoryCreate, truncateDatabase } from "../functions/functions"
+import { createRecord, truncateModels } from "../functions/functions"
 
 // Note to remember:
 // important that this `test.beforeEach` block is not nested within the `test.describe`
@@ -16,7 +16,9 @@ test.beforeEach(async ({ request }) => {
   // consulting uses more abstracted patterns that makes a POST request to a "test/truncations" endpoint, the body contains the models to be truncated
 
   // Truncation Option 2:
-  const truncateResponse = await truncateDatabase({ request })
+  // need to specify which models/ tables to truncate
+  // how set up endpoint to truncate any model/table?
+  await truncateModels({ request, data: { models: ["User"] } })
 
   // implementing via a function
   // consulting's use of helper functions utilizes axios for the requests to interact with the database
@@ -28,11 +30,10 @@ test.beforeEach(async ({ request }) => {
   // await truncateDatabase({ request, ["User"] })
   // (helper function would then make a post request instead of delete)
 
-  expect(truncateResponse.ok()).toBeTruthy()
-
   // Test Data Creation Option 1:
-  const userResponse = await factoryCreate({
+  await createRecord({
     request,
+    modelName: "User",
     data: { email: "hpotter@email.com", firstName: "Harry", lastName: "Potter" },
   })
   // similar considerations as the above truncation
@@ -47,7 +48,6 @@ test.beforeEach(async ({ request }) => {
   //     lastName: "Potter",
   //   },
   // })
-  expect(userResponse.ok()).toBeTruthy()
 })
 
 test.describe("Users Index", async () => {
@@ -56,16 +56,30 @@ test.describe("Users Index", async () => {
   })
 
   test("has a heading", async ({ page }) => {
-    await expect(page.getByRole("heading", { name: "Our App's Users" })).toBeVisible()
+    // option 1: by role
     // (personal opinion, I don't like this style of finding elements by "heading")
+    await expect(page.getByRole("heading", { name: "Our App's Users" })).toBeVisible()
+
+    // option 2: by text
+    await expect(page.getByText("Our App's Users")).toBeVisible()
   })
 
   test("lists all users", async ({ page }) => {
+    // option 1: by role
     await expect(page.getByRole("listitem")).toHaveCount(1)
     await expect(page.getByRole("listitem")).toHaveText(["Harry Potter"])
+
+    // option 2: by text
+    await expect(page.getByText("Harry Potter")).toBeVisible()
   })
 
   test("the page has a link to add a new user", async ({ page }) => {
-    await expect(page.getByRole("link", { name: "Add New User" })).toBeVisible()
+    // option 1: by role and text
+    // await expect(page.getByRole("link", { name: "Add New User" })).toBeVisible()
+    // await expect(page).toHaveURL("/users/new")
+
+    // option 2: by text
+    await page.getByText("Add New User").click()
+    await expect(page).toHaveURL("/users/new")
   })
 })

@@ -1,11 +1,10 @@
 // @ts-check
 import { expect, test } from "@playwright/test"
 
-import { truncateDatabase } from "../functions/functions"
+import { truncateModels } from "../functions/functions"
 
 test.beforeEach(async ({ request }) => {
-  const truncateResponse = await truncateDatabase({ request })
-  expect(truncateResponse.ok()).toBeTruthy()
+  await truncateModels({ request, data: { models: ["User"] } })
 })
 
 test.describe("Add New User Form", async () => {
@@ -24,6 +23,7 @@ test.describe("Add New User Form", async () => {
     })
 
     test("redirects to the user index page", async ({ page }) => {
+      // better/ different way to handle this and above test without repeat filling out form?
       await page.getByLabel("Email:").fill("pdickett@email.com")
       await page.getByLabel("First Name:").fill("Dan")
       await page.getByLabel("Last Name:").fill("Pickett")

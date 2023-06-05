@@ -1,17 +1,16 @@
 // @ts-check
 import { expect, test } from "@playwright/test"
 
-import { factoryCreate, truncateDatabase } from "../functions/functions"
+import { createRecord, truncateModels } from "../functions/functions"
 
 test.beforeEach(async ({ page, request }) => {
-  const truncateResponse = await truncateDatabase({ request })
-  expect(truncateResponse.ok()).toBeTruthy()
+  await truncateModels({ request, data: { models: ["User"] } })
 
-  const userResponse = await factoryCreate({
+  const userResponse = await createRecord({
     request,
+    modelName: "User",
     data: { email: "hpotter@email.com", firstName: "Harry", lastName: "Potter" },
   })
-  expect(userResponse.ok()).toBeTruthy()
 
   const parsedResponse = await userResponse.json()
   await page.goto(`/users/${parsedResponse.user.id}`)
