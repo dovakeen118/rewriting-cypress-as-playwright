@@ -1,42 +1,23 @@
-import React, { useState, useEffect } from "react";
-import { hot } from "react-hot-loader/root";
+import React from "react"
+import { BrowserRouter, Switch, Route } from "react-router-dom"
+import { hot } from "react-hot-loader/root"
 
-import "../assets/scss/main.scss";
+import UserList from "./UserList"
+import UserForm from "./UserForm"
+import UserDetails from "./UserDetails"
 
-const App = props => {
-  const [users, setUsers] = useState([])
+import "../assets/scss/main.scss"
 
-  const getUsers = async () => {
-    try {
-      const response = await fetch('/api/v1/users')
-      if (!response.ok) {
-        const errorMessage = `${response.status} (${response.statusText})`
-        const error = new Error(errorMessage)
-        throw(error)
-      }
-      const userData = await response.json()
-      setUsers(userData.users)
-    } catch(err) {
-      console.error(`Error in fetch: ${err.message}`)
-    }
-  }
-
-  useEffect(() => {
-    getUsers()
-  }, [])
-
-  const userListItems = users.map(user => {
-    return <li>{user.firstName} {user.lastName}</li>
-  })
-
-  return(
-    <>
-      <h1>Our App's Users</h1>
-      <ul className="users">
-        {userListItems}
-      </ul>
-    </>
+const App = (props) => {
+  return (
+    <BrowserRouter>
+      <Switch>
+        <Route exact path="/" component={UserList} />
+        <Route exact path="/users/new" component={UserForm} />
+        <Route exact path="/users/:id" component={UserDetails} />
+      </Switch>
+    </BrowserRouter>
   )
-};
+}
 
-export default hot(App);
+export default hot(App)

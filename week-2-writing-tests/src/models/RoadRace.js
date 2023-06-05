@@ -1,8 +1,8 @@
-import fs from 'fs'
+import fs from "fs"
 import _ from "lodash"
 
 let roadRacesPath
-if(process.env.NODE_ENV === "test") {
+if (process.env.NODE_ENV === "test") {
   roadRacesPath = "roadRacesTest.json"
 } else {
   roadRacesPath = "roadRaces.json"
@@ -19,7 +19,7 @@ class RoadRace {
   static findAll() {
     const roadRaceData = JSON.parse(fs.readFileSync(roadRacesPath)).roadRaces
     let roadRaces = []
-    roadRaceData.forEach(roadRace => {
+    roadRaceData.forEach((roadRace) => {
       const newRoadRace = new RoadRace(roadRace)
       roadRaces.push(newRoadRace)
     })
@@ -27,7 +27,7 @@ class RoadRace {
   }
 
   static getNextRaceId() {
-    const maxRace = _.maxBy(RoadRace.findAll(), roadRace => roadRace.id)
+    const maxRace = _.maxBy(RoadRace.findAll(), (roadRace) => roadRace.id)
     return maxRace.id + 1
   }
 

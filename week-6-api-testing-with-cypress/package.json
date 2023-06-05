@@ -1,0 +1,21 @@
+{
+  "type": "module",
+  "private": true,
+  "workspaces": [
+    "server",
+    "client",
+    "e2e"
+  ],
+  "scripts": {
+    "build:client": "yarn workspace api-testing-with-cypress-client build",
+    "dev": "yarn workspace api-testing-with-cypress-server dev",
+    "dev:debug": "yarn workspace api-testing-with-cypress-server dev:debug",
+    "heroku-postbuild": "yarn workspace api-testing-with-cypress-client build",
+    "start": "yarn workspace api-testing-with-cypress-server start",
+    "dev:e2e": "yarn workspace api-testing-with-cypress-server dev:e2e",
+    "e2e:run": "yarn workspace api-testing-with-cypress-e2e e2e:run"
+  },
+  "engines": {
+    "node": "^16.18"
+  }
+}
